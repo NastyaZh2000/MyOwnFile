@@ -17,7 +17,7 @@ namespace MyOwnFile
 			};
 			y.Write(tmp, arr);//write in binary file
 			var tmp1 = y.Read<Company, Worker>();//read from binary file
-			x.Write(tmp1[0].Item1, tmp1[0].Item2);
+			x.Write(tmp1.Item1, tmp1.Item2);
 		}
 	}
 }
