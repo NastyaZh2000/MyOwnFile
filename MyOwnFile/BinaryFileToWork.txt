@@ -1,0 +1,1 @@
+‚CompanyName, CompanyAdress : { FirstName1, LastName1, 10000 }; { FirstName2, LastName2, 20000 }; { FirstName3, LastName3, 30000 }.

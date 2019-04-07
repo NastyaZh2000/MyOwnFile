@@ -7,14 +7,17 @@ namespace MyOwnFile
 		static void Main(string[] args)
 		{
 			ConsoleFile x = new ConsoleFile();
+			BinaryFile y = new BinaryFile("C:/Users/Shop/source/repos/Programming_Univer/MyOwnFile/MyOwnFile/BinaryFileToWork.txt");
 			Company tmp = new Company("CompanyName", "CompanyAdress");
-			List<Worker> arr = new List<Worker>();
-			arr.Add(new Worker("FirstName1", "LastName1", 10000));
-			arr.Add(new Worker("FirstName2", "LastName2", 20000));
-			arr.Add(new Worker("FirstName3", "LastName3", 30000));
-			x.Write(tmp, arr);
-			var tmp1 = x.Read<Company, Worker>();
-			x.Write(tmp1.Item1, tmp1.Item2);
+			List<Worker> arr = new List<Worker>
+			{
+				new Worker("FirstName1", "LastName1", 10000),
+				new Worker("FirstName2", "LastName2", 20000),
+				new Worker("FirstName3", "LastName3", 30000)
+			};
+			y.Write(tmp, arr);//write in binary file
+			var tmp1 = y.Read<Company, Worker>();//read from binary file
+			x.Write(tmp1[0].Item1, tmp1[0].Item2);
 		}
 	}
 }

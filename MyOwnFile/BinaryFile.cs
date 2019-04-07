@@ -1,14 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace MyOwnFile
 {
 	class BinaryFile
 	{
-		string FileName;
-		public BinaryFile(string _FileName = "")
+		string BinaryFilePath;
+		public BinaryFile(string _BinaryFilePath = "")
 		{
-			FileName = _FileName;
+			BinaryFilePath = _BinaryFilePath;
+		}
+		public void WriteFrameCodesAsBinary(string frameCode)
+		{
+			using (FileStream fileStream = new FileStream(BinaryFilePath, FileMode.Create))
+			using (BinaryWriter binaryWriter = new BinaryWriter(fileStream))
+			{
+				binaryWriter.Write(frameCode);
+			}
 		}
 		public void Write<TypeOfMain, TypeOfSub>(TypeOfMain MainElem, List<TypeOfSub> SubElem)
 			where TypeOfMain : IFormattable
@@ -22,7 +31,15 @@ namespace MyOwnFile
 			}
 			Result += "{ " + Convert.ToString(SubElem[N - 1]) + " }.";
 
-			//write	Console.WriteLine(Result); in binary file
+			try
+			{
+				this.WriteFrameCodesAsBinary(Result);
+			}
+			catch (IOException e)
+			{
+				Console.WriteLine(e.Message + "\n Cannot open file.");
+				return;
+			}
 
 
 		}
@@ -30,7 +47,9 @@ namespace MyOwnFile
 			where TypeOfMain : class
 			where TypeOfSub : class
 		{
-			string Line = ""; //read Console.ReadLine(); from binary file
+			FileStream readStream = new FileStream(BinaryFilePath, FileMode.Open);
+			BinaryReader readBinary = new BinaryReader(readStream);
+			string Line = readBinary.ReadString();
 			string Main = "";
 			for (int i = 0; i < Line.Length; i++)
 			{
@@ -61,7 +80,8 @@ namespace MyOwnFile
 					IsSub = true;
 				}
 			}
-			return new Tuple<TypeOfMain, List<TypeOfSub>>(ResultMain, ResultSub);
+			return (new Tuple<TypeOfMain, List<TypeOfSub>>(ResultMain, ResultSub));
+
 		}
 	}
 }
