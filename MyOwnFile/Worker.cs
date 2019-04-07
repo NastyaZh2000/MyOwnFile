@@ -13,11 +13,22 @@ namespace MyOwnFile
 			LastName = _LastName;
 			Money = _Money;
 		}
-		
+		public Worker(string ALL)
+		{
+			var Elems = ALL.Replace(" ", String.Empty).Split(',');
+			FirstName = Elems[0];
+			LastName = Elems[1];
+			Money = Convert.ToInt32(Elems[2]);
+		}
+		public override string ToString()
+		{
+			string Result = FirstName + ", " + LastName + ", " + Convert.ToString(Money);
+			return Result;
+		}
 
 		public string ToString(string format, IFormatProvider formatProvider)
 		{
-			throw new NotImplementedException();
+			return this.ToString();
 		}
 	}
 }
